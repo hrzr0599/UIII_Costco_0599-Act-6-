@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card p-4">
+  <h4 class="mb-3">Lista de Proveedores</h4>
+  <table class="table table-striped align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Contacto</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in proveedores %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.nombre }}</td>
+        <td>{{ p.nombre_contacto_principal }}</td>
+        <td>{{ p.telefono }}</td>
+        <td>{{ p.email }}</td>
+        <td>
+          <a href="{% url 'actualizar_proveedor' p.id %}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{% url 'borrar_proveedor' p.id %}" class="btn btn-danger btn-sm">Borrar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

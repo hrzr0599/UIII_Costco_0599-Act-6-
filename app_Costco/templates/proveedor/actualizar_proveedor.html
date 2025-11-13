@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card p-4">
+  <h4 class="mb-3">Actualizar Proveedor</h4>
+  <form method="POST" action="{% url 'realizar_actualizacion_proveedor' proveedor.id %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Nombre</label>
+      <input type="text" name="nombre" class="form-control" value="{{ proveedor.nombre }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Contacto Principal</label>
+      <input type="text" name="nombre_contacto_principal" class="form-control" value="{{ proveedor.nombre_contacto_principal }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Teléfono</label>
+      <input type="text" name="telefono" class="form-control" value="{{ proveedor.telefono }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" name="email" class="form-control" value="{{ proveedor.email }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Dirección</label>
+      <textarea name="direccion" class="form-control" rows="3">{{ proveedor.direccion }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+  </form>
+</div>
+{% endblock %}

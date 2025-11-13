@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card p-4">
+  <h4 class="mb-3">Actualizar Categoría</h4>
+  <form method="POST" action="{% url 'realizar_actualizacion_categoria' categoria.id %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" value="{{ categoria.nombre }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+  </form>
+</div>
+{% endblock %}
