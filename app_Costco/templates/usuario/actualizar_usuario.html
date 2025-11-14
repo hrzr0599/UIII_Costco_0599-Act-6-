@@ -20,6 +20,13 @@
     <input class="form-control" name="apellido" value="{{ usuario.apellido }}">
   </div>
   <div class="mb-3">
+    <label class="form-label">Tipo de Membresía</label>
+    <select class="form-control" name="membresia">
+      <option value="Gold" {% if usuario.membresia == 'Gold' %}selected{% endif %}>Gold</option>
+      <option value="Executive" {% if usuario.membresia == 'Executive' %}selected{% endif %}>Executive</option>
+    </select>
+  </div>
+  <div class="mb-3">
     <label class="form-label">Dirección</label>
     <textarea class="form-control" name="direccion">{{ usuario.direccion }}</textarea>
   </div>

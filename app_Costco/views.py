@@ -14,6 +14,7 @@ def agregar_usuario(request):
         apellido = request.POST.get('apellido', '').strip()
         direccion = request.POST.get('direccion', '').strip()
         telefono = request.POST.get('telefono', '').strip()
+        membresia = request.POST.get('membresia', 'Gold')
 
         usuario = Usuario(
             nombre_usuario=nombre_usuario,
@@ -21,7 +22,8 @@ def agregar_usuario(request):
             nombre=nombre,
             apellido=apellido,
             direccion=direccion,
-            telefono=telefono
+            telefono=telefono,
+            membresia=membresia
         )
         usuario.save()
         return redirect('ver_usuario')
@@ -48,6 +50,7 @@ def realizar_actualizacion_usuario(request, usuario_id):
         usuario.apellido = request.POST.get('apellido', usuario.apellido).strip()
         usuario.direccion = request.POST.get('direccion', usuario.direccion).strip()
         usuario.telefono = request.POST.get('telefono', usuario.telefono).strip()
+        usuario.membresia = request.POST.get('membresia', usuario.membresia)
         usuario.save()
         return redirect('ver_usuario')
     return redirect('actualizar_usuario', usuario_id=usuario_id)

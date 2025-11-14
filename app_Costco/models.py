@@ -8,6 +8,11 @@ class Usuario(models.Model):
     apellido = models.CharField(max_length=100)
     direccion = models.TextField()
     telefono = models.CharField(max_length=20, blank=True, null=True)
+    class MembresiaChoices(models.TextChoices):
+        GOLD = 'Gold', 'Gold'
+        EXECUTIVE = 'Executive', 'Executive'
+
+    membresia = models.CharField(max_length=20, choices=MembresiaChoices.choices, default=MembresiaChoices.GOLD)
     fecha_registro = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
