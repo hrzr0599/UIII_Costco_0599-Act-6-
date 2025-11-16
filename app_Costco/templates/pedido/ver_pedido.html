@@ -14,11 +14,13 @@
       <th>Acciones</th>
     </tr>
   </thead>
-  <tbody>
-    {% for p in pedidos %}
-    <tr>
-      <td>{{ p.id }}</td>
-      <td>{{ p.usuario.nombre_usuario }}</td>
+      <th>Usuario</th>
+      <th>Fecha</th>
+      <th>Estado</th>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>Descuento</th>
+      <th>Total</th>
       <td>{{ p.fecha_pedido|date:"d/m/Y H:i" }}</td>
       <td>{{ p.estado_pedido }}</td>
       <td>${{ p.total_pedido }}</td>
@@ -26,16 +28,13 @@
         {% for prod in p.productos.all %}
           {{ prod.nombre }}{% if not forloop.last %}, {% endif %}
         {% empty %}
-          Sin productos
-        {% endfor %}
-      </td>
-      <td>
-        <a class="btn btn-sm btn-info" href="{% url 'actualizar_pedido' p.id %}">Editar</a>
-        <a class="btn btn-sm btn-danger" href="{% url 'borrar_pedido' p.id %}">Borrar</a>
-      </td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="7">No hay pedidos registrados.</td></tr>
+      <td>{{ p.usuario.nombre_usuario }}</td>
+      <td>{{ p.fecha_pedido|date:"d/m/Y H:i" }}</td>
+      <td>{{ p.estado_pedido }}</td>
+      <td>{% if p.producto %}{{ p.producto.nombre }}{% else %}Sin producto{% endif %}</td>
+      <td>{{ p.cantidad }}</td>
+      <td>${{ p.descuento }}</td>
+      <td>${{ p.total_pedido }}</td>
     {% endfor %}
   </tbody>
 </table>

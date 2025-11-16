@@ -172,17 +172,22 @@ def agregar_pedido(request):
         total_pedido = request.POST.get('total_pedido')
         metodo_pago = request.POST.get('metodo_pago')
         estado_pedido = request.POST.get('estado_pedido')
-        productos_ids = request.POST.getlist('productos')
+        producto_id = request.POST.get('producto')
+        cantidad = request.POST.get('cantidad', 1)
+        descuento = request.POST.get('descuento', 0)
 
         usuario = Usuario.objects.get(id=usuario_id)
+        producto = Producto.objects.get(id=producto_id) if producto_id else None
         pedido = Pedido.objects.create(
             usuario=usuario,
             direccion_envio=direccion_envio,
             total_pedido=total_pedido,
             metodo_pago=metodo_pago,
-            estado_pedido=estado_pedido
+            estado_pedido=estado_pedido,
+            producto=producto,
+            cantidad=cantidad,
+            descuento=descuento
         )
-        pedido.productos.set(productos_ids)
         return redirect('ver_pedido')
 
     return render(request, 'pedido/agregar_pedido.html', {
@@ -218,10 +223,11 @@ def realizar_actualizacion_pedido(request, pedido_id):
         pedido.total_pedido = request.POST.get('total_pedido')
         pedido.metodo_pago = request.POST.get('metodo_pago')
         pedido.estado_pedido = request.POST.get('estado_pedido')
+        producto_id = request.POST.get('producto')
+        pedido.producto_id = producto_id if producto_id else None
+        pedido.cantidad = request.POST.get('cantidad', pedido.cantidad)
+        pedido.descuento = request.POST.get('descuento', pedido.descuento)
         pedido.save()
-
-        productos_ids = request.POST.getlist('productos')
-        pedido.productos.set(productos_ids)
         return redirect('ver_pedido')
     return redirect('actualizar_pedido', pedido_id=pedido_id)
 
@@ -393,6 +399,7 @@ def agregar_ventas(request):
         usuario_id = request.POST.get('usuario')
         vendedor_id = request.POST.get('vendedor')
         total = request.POST.get('total')
+        cantidad = request.POST.get('cantidad', 1)
         metodo_pago = request.POST.get('metodo_pago')
         descuento = request.POST.get('descuento', 0)
 
@@ -405,6 +412,7 @@ def agregar_ventas(request):
             usuario=usuario,
             vendedor=vendedor,
             total=total,
+            cantidad=cantidad,
             metodo_pago=metodo_pago,
             descuento=descuento
         )
@@ -442,6 +450,7 @@ def realizar_actualizacion_ventas(request, id):
         venta.usuario_id = request.POST.get('usuario')
         venta.vendedor_id = request.POST.get('vendedor')
         venta.total = request.POST.get('total')
+        venta.cantidad = request.POST.get('cantidad', venta.cantidad)
         venta.metodo_pago = request.POST.get('metodo_pago')
         venta.descuento = request.POST.get('descuento', 0)
         venta.save()

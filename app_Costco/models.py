@@ -63,7 +63,10 @@ class Pedido(models.Model):
     metodo_pago = models.CharField(max_length=50)
     fecha_entrega_estimada = models.DateField(blank=True, null=True)
     numero_seguimiento = models.CharField(max_length=100, blank=True, null=True)
-    productos = models.ManyToManyField(Producto, related_name='pedidos')
+    # Single-product order fields (simplified)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='pedidos', null=True)
+    cantidad = models.PositiveIntegerField(default=1)
+    descuento = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
 
     def __str__(self):
         return f"Pedido #{self.id} de {self.usuario.nombre_usuario}"
@@ -85,6 +88,7 @@ class Ventas(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='ventas_realizadas')
     vendedor = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='ventas')
     fecha_venta = models.DateTimeField(auto_now_add=True)
+    cantidad = models.PositiveIntegerField(default=1)
     total = models.DecimalField(max_digits=10, decimal_places=2)
     metodo_pago = models.CharField(max_length=50)
     descuento = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
